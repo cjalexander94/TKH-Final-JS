@@ -6,12 +6,47 @@
 
 angular.module("examApp.controllers", [])
     .controller("mainCtrl", function($scope){})
-    .controller("getCtrl", function(){
 
-    })
-    .controller("postCtrl", function(){
+    .controller("getCtrl", function($scope, $http){
 
-    })
-    .controller("updateCtrl", function(){
+    $http.get("http://localhost:8080/api/data")
+    	.then(function(response) {
+        	$scope.post = response.data
+    	});
 
-    })
+    });
+    .controller("postCtrl", function($scope, $http, $window){
+   		$scope.createPost = function(){
+    	$http.get("/api/post", $scope.post)
+    	.then(function(response) {
+    		$window.location.href = '/'
+    			$scope.msg = "It works!";
+    		console.log("It works!")
+    		}, function(response){
+    			$scope.msg ="Doesnt work!"
+    			console.log("Doesnt work!")
+    		});
+		};
+    });
+
+    .controller("updateCtrl", function($scope, $http, $window, $location){
+    	var p = $location.search().p
+
+    	$scope.deletePost = function(){
+    		$http.delete('api/delete/:id', {params :{id: p}})
+    		.then(function(response){
+    			console.log("delete success")
+    			$window.location.href='/'
+    		});
+    	};
+
+    	$scope.editPost = function(){
+    		$http.put('/api/update/:id', $scope.post, {params: {id: p}})
+    		.then(function(response){
+    			$window.location.href='/'
+    			console.log("its alive")
+    		}), function(response){
+    			console.log("ded")
+    		}
+    	}
+    });

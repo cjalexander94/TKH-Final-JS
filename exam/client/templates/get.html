@@ -1,3 +1,20 @@
 <h1> Hello get</h1>
 
 <h2> I should be showing the data in the form of a table</h2>
+<div ng-controller="getCtrl">
+
+	<table>
+		<tr>
+			<td>Name</td>
+			<td ng-repeat="post in posts"><a href="#!/update?p={{posts._id}}">{{posts.name}}</a></td>
+		</tr>
+		<tr>
+			<td>Age</td>
+			<td ng-repeat="post in posts">{{posts.age}}</td>
+		</tr>
+		<tr>
+			<td>Occupation</td>
+			<td ng-repeat="post in posts">{{posts.occupation}}</td>
+		</tr>
+	</table>
+</div>

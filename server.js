@@ -1,6 +1,9 @@
-var express = require("express");
-var path = require("path");
-var app = express();
+var express = require("express"),
+	path = require("path"),
+	bodyParser = require("body-parser"),
+	routes = require("./routes/routes"),
+	mongoose =require("mongoose"),
+	app = express();
 //I need the body-parser and routes module
 
 app.use("/client", express.static(path.join(__dirname, "exam/client")));
@@ -11,7 +14,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+routes(app);
 
 //I can't seem to direct to my routes but I am running, can you link me to my routes? Please input the routes in this file.
-
-app.listen(8080) //What Port should I listen on? Please put the port in between the parantheses
+mongoose.connect(process.env.DB_URL);
+app.listen(process.env.PORT || 8080);
+console.log("Final is running!");
+ //What Port should I listen on? Please put the port in between the parantheses
